@@ -43,7 +43,7 @@ exports.Mutation = {
         return newProduct;
     },
 
-    addReview: (parent, {input}, {db}) => {
+    addReview: (parent, { input }, { db }) => {
         const {
             date,
             title,
@@ -66,6 +66,16 @@ exports.Mutation = {
         return newReview;
     },
 
-    
+    deleteCategory: (parent, { id }, { db }) => {
+        db.categories = db.categories.filter((category) => { db.categories.id !== id });
+        db.products = db.products.map((product) => {
+            if(product.categoryId === id) return { 
+                ...product,
+                categoryId:null,
+            }
+            else return product
+        })
+        return true;
+    }
 
 }
