@@ -1,11 +1,11 @@
 exports.Product = {
-    category: ({categoryId}, args, { categories }) => {
-        const category = categories.find((category) => category.id === categoryId);
+    category: ({categoryId}, args, { db }) => {
+        const category = db.categories.find((category) => category.id === categoryId);
         return category;
     },
 
-    reviews: ({id: productId}, args, {reviews}) => {
-        const review = reviews.filter((review) => review.productId === productId);
+    reviews: ({id: productId}, args, {db}) => {
+        const review = db.reviews.filter((review) => review.productId === productId);
         return review;
     }
 }
