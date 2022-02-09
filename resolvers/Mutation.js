@@ -67,7 +67,7 @@ exports.Mutation = {
     },
 
     deleteCategory: (parent, { id }, { db }) => {
-        db.categories = db.categories.filter((category) => { db.categories.id !== id });
+        db.categories = db.categories.filter((category) => { category.id !== id });
         db.products = db.products.map((product) => {
             if(product.categoryId === id) return { 
                 ...product,
@@ -76,6 +76,23 @@ exports.Mutation = {
             else return product
         })
         return true;
-    }
+    },
 
+    deleteProduct: (parent, { id }, { db }) => {
+        db.products = db.products.filter((product) =>  product.id !== id );
+        db.reviews = db.reviews.filter((review) => review.productId !== id)
+        // 以下まちがってる！dbデータをよく見るとreviewのproducuIdは必要が無い。カテゴリーと違ってreviewからは１対１
+        // db.reviews = db.reviews.map((review) => {
+        //     if(review.productId === id) return { 
+        //         ...review,
+        //         productId:null,
+        //     }
+        //     else return review
+        return true;
+    },
+
+    deleteReview: (parent, {id}, {db}) => {
+        db.reviews = db.reviews.filter((review) => review.id !== id);
+        return true;
+    },
 }
